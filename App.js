@@ -28,7 +28,7 @@ export default function App() {
        <Stack.Screen name="Grouplist" component={GrouplistScreen} 
         />
       <Stack.Screen name="Vocablist" component={VocabListScreen} 
-      options={({ route }) => ({ words: route.params.words })}
+      options={({ route }) => ({ num: route.params.num })}
         />
     </Stack.Navigator>
   </NavigationContainer>

@@ -11,14 +11,15 @@ import {
 
 import VocabDetails from "../components/VocabDetails";
 const VocabListScreen = ({ navigation, route }) => {
-  //const SERVER_URL = "https://gmat-vocab-server.herokuapp.com/";
-  //const [list, setList] = useState([]);
-  //const GROUPNUM = route.params.num
-  /*  let URL=`${SERVER_URL}group/${GROUPNUM}`
+  const SERVER_URL = "https://gmat-vocab-server.herokuapp.com/";
+  const [list, setList] = useState([]);
+  const GROUPNUM = route.params.num
+    let URL=`${SERVER_URL}group/${GROUPNUM}`
   if(GROUPNUM==0){
     URL=`${SERVER_URL}allgroup`
   }
- */
+ 
+
   const [loading, setLoading] = useState(false);
   const startLoading = () => {
     setLoading(true);
@@ -29,12 +30,20 @@ const VocabListScreen = ({ navigation, route }) => {
 
     useEffect(() => {
       startLoading();
+      fetch(URL) //"https://cors-anywhere.herokuapp.com/https://pselookup.vrymel.com/api/stocks"
+      .then((response) => response.json())
+      .then((json) => {
+        //setList(json["stocks"]);
+        const WORDS = json.map((word) => word["WORD"]);
+        //console.log(WORDS)
+        setList(WORDS);
+        //return WORDS
+      })
+      .catch((error) => console.log(error));
   }, []);  
   
 
-
-
-  const list = route.params.words;
+  //const list = route.params.words;
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>

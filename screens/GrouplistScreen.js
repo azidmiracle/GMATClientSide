@@ -11,11 +11,11 @@ import {
   ScrollView
 } from "react-native";
 
-
 const SERVER_URL = "https://gmat-vocab-server.herokuapp.com/";
 const Tabs = (props) => {
   const [words, setWords] = useState([]);
-  function getData(grpNum){
+
+  /* function getData(grpNum){
     let URL=`${SERVER_URL}group/${grpNum}`
     if(grpNum==0){
       URL=`${SERVER_URL}allgroup`
@@ -31,8 +31,8 @@ const Tabs = (props) => {
       })
       .catch((error) => console.log(error));
   
-  }
-  getData(props.num)
+  } */
+  //getData(props.num)
 
   return (
     <View>
@@ -40,7 +40,7 @@ const Tabs = (props) => {
         style={styles.item}
         onPress={() =>
           props.navigation.navigate("Vocablist", {
-            words: words,
+            num: props.num,
           })
         }
       >
