@@ -8,10 +8,11 @@ import {
   SafeAreaView,
   FlatList,
   ActivityIndicator,
+  ScrollView
 } from "react-native";
 
-const SERVER_URL = "https://gmat-vocab-server.herokuapp.com/";
 
+const SERVER_URL = "https://gmat-vocab-server.herokuapp.com/";
 const Tabs = (props) => {
   const [words, setWords] = useState([]);
   function getData(grpNum){
@@ -59,8 +60,6 @@ const GrouplistScreen = ({ navigation, route }) => {
     }, 2000);
   };
 
-  
-
   useEffect(() => {
     startLoading()
     fetch(`${SERVER_URL}distinctgrp`) //"https://cors-anywhere.herokuapp.com/https://pselookup.vrymel.com/api/stocks"
@@ -76,7 +75,7 @@ const GrouplistScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <ScrollView>
         {loading ? (
           <ActivityIndicator
             //visibility of Overlay Loading Spinner
@@ -95,7 +94,7 @@ const GrouplistScreen = ({ navigation, route }) => {
             ></FlatList>
           </>
         )}
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

@@ -1,33 +1,65 @@
 import "react-native-gesture-handler";
-import React,{useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
-  SafeAreaView ,
+  SafeAreaView,
   FlatList,
-  SectionList
+  ActivityIndicator,
+  ScrollView,
 } from "react-native";
 
-
-import VocabDetails from '../components/VocabDetails'
-const VocabListScreen = ({navigation,route}) => {
+import VocabDetails from "../components/VocabDetails";
+const VocabListScreen = ({ navigation, route }) => {
   //const SERVER_URL = "https://gmat-vocab-server.herokuapp.com/";
   //const [list, setList] = useState([]);
   //const GROUPNUM = route.params.num
- /*  let URL=`${SERVER_URL}group/${GROUPNUM}`
+  /*  let URL=`${SERVER_URL}group/${GROUPNUM}`
   if(GROUPNUM==0){
     URL=`${SERVER_URL}allgroup`
   }
  */
- /*  useEffect(() => {
-    console.log(route.params.words)
-  }, []);  */
- 
-const list = route.params.words
+  const [loading, setLoading] = useState(false);
+  const startLoading = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  };
+
+    useEffect(() => {
+      startLoading();
+  }, []);  
+  
+
+
+
+  const list = route.params.words;
   return (
-    <SafeAreaView  
-   
-    style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        {loading ? (
+          <ActivityIndicator
+            //visibility of Overlay Loading Spinner
+            visible={loading}
+            size="large"
+            color="#00ff00"
+          />
+        ) : (
+          <>
+            {list.map((result, index) => {
+              return (
+                <VocabDetails
+                  title={result}
+                  navigation={navigation}
+                  index={index}
+                  key={index}
+                />
+              );
+            })}
+          </>
+        )}
+        {/* 
        <FlatList
 
         data={list}
@@ -37,7 +69,8 @@ const list = route.params.words
           return <VocabDetails title={item} navigation={navigation} index={index} key={index}/>;
         }} 
         contentContainerStyle={styles.list}
-      ></FlatList> 
+      ></FlatList>  */}
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -49,7 +82,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     //height: 400,
     maxHeight: 500,
-    textAlign:'center'
+    textAlign: "center",
   },
 
   list: {
@@ -57,7 +90,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     //flexWrap: "wrap",
   },
- 
 });
 
 export default VocabListScreen;
